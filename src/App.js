@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
+import { Statistics } from './Components/Statistics';
+import { Visualizer } from './Components/Visualizer';
+import styled from 'styled-components'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const AppStyled = styled.div`
+  display: flex;
+  position: relative;
+  width: 100vw;
+`;
+
+
+export const App = () => {
+  const [position, setPosition] = useState(localStorage.getItem('CurrentView') ?? (localStorage.setItem('CurrentView', '0vw') & '0vw' ));
+
+  useEffect(() => {
+    document.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && event.key === 'Enter') {
+          yourFunction();
+      }
+    });
+    
+    function yourFunction() {
+      setPosition(curState => {
+        let newState = curState == '0vw' ? '100vw' : '0vw';
+        localStorage.setItem('CurrentView', newState);
+        return newState;
+      });
+    }
+  }, []);
+
+  return (  
+    <AppStyled>
+    <Visualizer position={position} />
+    <Statistics position={position} />
+    </AppStyled>
   );
 }
-
-export default App;
