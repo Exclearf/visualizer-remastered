@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { Statistics } from './Components/Statistics';
 import { Visualizer } from './Components/Visualizer';
@@ -23,7 +23,7 @@ export const App = () => {
     
     function yourFunction() {
       setPosition(curState => {
-        let newState = curState == '0vw' ? '100vw' : '0vw';
+        let newState = curState === '0vw' ? '100vw' : '0vw';
         localStorage.setItem('CurrentView', newState);
         return newState;
       });
